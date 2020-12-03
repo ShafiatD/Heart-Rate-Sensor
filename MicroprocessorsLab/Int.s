@@ -34,8 +34,8 @@ Int_Main:
 	cpfseq	init, A		
 	goto	Int_Check	; if it hasnt goto Int_Check
 	movlw	0x0f
-	cpfseq	int_count, A	; check if interrupt counter is 10
-	goto	Int_Main_lt10	; if it is less than 10 goto main lt10 routine
+	cpfseq	int_count, A	; check if interrupt counter is 15
+	goto	Int_Main_lt15	; if it is less than 15 goto main lt15 routine
 	lfsr	0, 0x080	; else reset fsr0 to start of seconds registers
 	movlw	0x0		; clear interrupt counter
 	movwf	int_count, A
@@ -43,7 +43,7 @@ Int_Main:
 	pop			; clear unnecessary elements in stack
 	goto	Analysis_and_output	; go back to main code
 	
-Int_Main_lt10:
+Int_Main_lt15:
 	movf	POSTINC0, W, A	; increment fsr0
 	bsf	GIE		; re-enable all interrupts
 	pop			; clear unnecessary elements in stack
@@ -51,7 +51,7 @@ Int_Main_lt10:
 	
 Int_Check:
 	movlw	0x0f
-	cpfseq	int_count, A	; check if interrupt counter is 10	
+	cpfseq	int_count, A	; check if interrupt counter is 15	
 	goto	Int_return	; if not go to return routine
 	movlw	0x01		; else set initialisation variable to 1
 	movwf	init, A		
