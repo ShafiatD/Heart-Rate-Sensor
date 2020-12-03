@@ -1,0 +1,335 @@
+
+
+Microchip MPLAB XC8 Assembler V2.30 build 20200825195618 
+                                                                                                           Thu Nov 26 15:54:25 2020
+
+
+     1                           	processor	18F87K22
+     2                           	pagewidth 132
+     3                           	psect	udata_acs,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     4                           	psect	udata_bank0,global,class=BANK0,space=1,delta=1,lowdata,noexec
+     5                           	psect	udata_bank1,global,class=BANK1,space=1,delta=1,lowdata,noexec
+     6                           	psect	udata_bank2,global,class=BANK2,space=1,delta=1,lowdata,noexec
+     7                           	psect	udata_bank3,global,class=BANK3,space=1,delta=1,lowdata,noexec
+     8                           	psect	udata_bank4,global,class=BANK4,space=1,delta=1,lowdata,noexec
+     9                           	psect	udata_bank5,global,class=BANK5,space=1,delta=1,lowdata,noexec
+    10                           	psect	udata_bank6,global,class=BANK6,space=1,delta=1,lowdata,noexec
+    11                           	psect	udata_bank7,global,class=BANK7,space=1,delta=1,lowdata,noexec
+    12                           	psect	udata_bank8,global,class=BANK8,space=1,delta=1,lowdata,noexec
+    13                           	psect	udata_bank9,global,class=BANK9,space=1,delta=1,lowdata,noexec
+    14                           	psect	udata_bank10,global,class=BANK10,space=1,delta=1,lowdata,noexec
+    15                           	psect	udata_bank11,global,class=BANK11,space=1,delta=1,lowdata,noexec
+    16                           	psect	udata_bank12,global,class=BANK12,space=1,delta=1,lowdata,noexec
+    17                           	psect	udata_bank13,global,class=BANK13,space=1,delta=1,lowdata,noexec
+    18                           	psect	udata_bank14,global,class=BANK14,space=1,delta=1,lowdata,noexec
+    19                           	psect	udata_bank15,global,class=BANK15,space=1,delta=1,lowdata,noexec
+    20                           	psect	udata,global,class=RAM,space=1,delta=1,noexec
+    21                           	psect	code,global,reloc=2,class=CODE,delta=1
+    22                           	psect	data,global,reloc=2,class=CONST,delta=1,noexec
+    23                           	psect	edata,global,class=EEDATA,space=3,delta=2,noexec
+    24                           	psect	udata_acs_ovr,global,ovrld,class=COMRAM,space=1,delta=1
+    25                           	psect	lcd_code,global,class=CODE,delta=1
+    26  0000                     
+    27                           	psect	udata_acs
+    28  000015                     LCD_cnt_l:
+    29  000015                     	ds	1	; reserve 1 byte for variable LCD_cnt_l
+    30  000016                     LCD_cnt_h:
+    31  000016                     	ds	1	; reserve 1 byte for variable LCD_cnt_h
+    32  000017                     LCD_cnt_ms:
+    33  000017                     	ds	1	; reserve 1 byte for ms counter
+    34  000018                     LCD_tmp:
+    35  000018                     	ds	1	; reserve 1 byte for temporary use
+    36  000019                     	ds	1	; reserve 1 byte for counting through nessage
+    37                           
+    38                           	psect	edata
+    39  0000                     stk_offset	set	0
+    40  0000                     auto_size	set	0
+    41                           
+    42                           ; stack_auto defines a symbol /name/_offset which equates to the
+    43                           ; stack offset of the auto object in question
+    44  000000                     
+    45                           ; stack_param defines a symbol /name/_offset which equates to the
+    46                           ; stack offset of the parameter object in question
+    47  000000                     
+    48                           ; alloc_stack adjusts the SP to allocate space for auto objects
+    49                           ; it also links in to the btemp symbol so that can be used
+    50  000000                     
+    51                           ; restore_stack adjusts the SP to remove all auto and parameter
+    52                           ; objects from the stack prior to returning from a function
+    53  000000                     
+    54                           	psect	udata_acs_ovr
+    55  00001E                     LCD_hex_tmp:
+    56  00001E                     	ds	1	; reserve 1 byte for variable LCD_hex_tmp
+    57  0000                     
+    58                           	psect	lcd_code
+    59  01FE34                     LCD_Setup:
+    60                           	callstack 0
+    61  01FE34  6A8A               	clrf	3978,c
+    62  01FE36  0EC0               	movlw	192	; ((PORTB) and 0FFh), 0, a:5 all outputs
+    63  01FE38  6E93               	movwf	3987,c
+    64  01FE3A  0E28               	movlw	40
+    65  01FE3C  ECEA  F0FF         	call	LCD_delay_ms	; wait 40ms for LCD to start up properly
+    66  01FE40  0E30               	movlw	48	; Function set 4-bit
+    67  01FE42  ECB9  F0FF         	call	LCD_Send_Byte_I
+    68  01FE46  0E0A               	movlw	10	; wait 40us
+    69  01FE48  ECF1  F0FF         	call	LCD_delay_x4us
+    70  01FE4C  0E28               	movlw	40	; 2 line display 5x8 dot characters
+    71  01FE4E  ECB9  F0FF         	call	LCD_Send_Byte_I
+    72  01FE52  0E0A               	movlw	10	; wait 40us
+    73  01FE54  ECF1  F0FF         	call	LCD_delay_x4us
+    74  01FE58  0E28               	movlw	40	; repeat, 2 line display 5x8 dot characters
+    75  01FE5A  ECB9  F0FF         	call	LCD_Send_Byte_I
+    76  01FE5E  0E0A               	movlw	10	; wait 40us
+    77  01FE60  ECF1  F0FF         	call	LCD_delay_x4us
+    78  01FE64  0E0F               	movlw	15	; display on, cursor on, blinking on
+    79  01FE66  ECB9  F0FF         	call	LCD_Send_Byte_I
+    80  01FE6A  0E0A               	movlw	10	; wait 40us
+    81  01FE6C  ECF1  F0FF         	call	LCD_delay_x4us
+    82  01FE70  0E01               	movlw	1	; display clear
+    83  01FE72  ECB9  F0FF         	call	LCD_Send_Byte_I
+    84  01FE76  0E02               	movlw	2	; wait 2ms
+    85  01FE78  ECEA  F0FF         	call	LCD_delay_ms
+    86  01FE7C  0E06               	movlw	6	; entry mode incr by 1 no shift
+    87  01FE7E  ECB9  F0FF         	call	LCD_Send_Byte_I
+    88  01FE82  0E0A               	movlw	10	; wait 40us
+    89  01FE84  ECF1  F0FF         	call	LCD_delay_x4us
+    90  01FE88  0012               	return	
+    91  01FE8A                     LCD_Clear:
+    92  01FE8A  0E01               	movlw	1	; display clear
+    93  01FE8C  ECB9  F0FF         	call	LCD_Send_Byte_I
+    94  01FE90  0E03               	movlw	3	; wait 2ms
+    95  01FE92  ECEA  F0FF         	call	LCD_delay_ms
+    96  01FE96  0012               	return	
+    97  01FE98                     LCD_Write_Hex_HB:
+    98                           
+    99                           ; Writes byte stored in W as hex
+   100  01FE98  6E1E               	movwf	LCD_hex_tmp,c
+   101  01FE9A  381E               	swapf	LCD_hex_tmp,w,c	; high nibble first
+   102  01FE9C  EC51  F0FF         	call	LCD_Hex_Nib_HB
+   103  01FEA0  501E               	movf	LCD_hex_tmp,w,c	; then low nibble
+   104  01FEA2                     LCD_Hex_Nib_HB:
+   105                           
+   106                           ; writes low nibble as hex character
+   107  01FEA2  0B0F               	andlw	15	; if there is a 0 that appears in the high byte
+   108  01FEA4  6E18               	movwf	LCD_tmp,c	; do not write it
+   109  01FEA6  0E00               	movlw	0
+   110  01FEA8  6418               	cpfsgt	LCD_tmp,c
+   111  01FEAA  0012               	return	
+   112  01FEAC  0E0A               	movlw	10
+   113  01FEAE  6018               	cpfslt	LCD_tmp,c
+   114  01FEB0  0F07               	addlw	7	; number is greater than 9
+   115  01FEB2  0F26               	addlw	38
+   116  01FEB4  2418               	addwf	LCD_tmp,w,c
+   117  01FEB6  ECC7  F0FF         	call	LCD_Send_Byte_D	; write out ascii
+   118  01FEBA  0012               	return	
+   119  01FEBC                     LCD_Write_Hex_LB:
+   120                           
+   121                           ; Writes byte stored in W as hex
+   122  01FEBC  6E1E               	movwf	LCD_hex_tmp,c
+   123  01FEBE  381E               	swapf	LCD_hex_tmp,w,c	; high nibble first
+   124  01FEC0  EC63  F0FF         	call	LCD_Hex_Nib_LB
+   125  01FEC4  501E               	movf	LCD_hex_tmp,w,c	; then low nibble
+   126  01FEC6                     LCD_Hex_Nib_LB:
+   127                           
+   128                           ; writes low nibble as hex character
+   129  01FEC6  0B0F               	andlw	15
+   130  01FEC8  6E18               	movwf	LCD_tmp,c
+   131  01FECA  0E0A               	movlw	10
+   132  01FECC  6018               	cpfslt	LCD_tmp,c
+   133  01FECE  0F07               	addlw	7	; number is greater than 9
+   134  01FED0  0F26               	addlw	38
+   135  01FED2  2418               	addwf	LCD_tmp,w,c
+   136  01FED4  ECC7  F0FF         	call	LCD_Send_Byte_D	; write out ascii
+   137  01FED8  0012               	return	
+   138  01FEDA                     LCD_Write_HR:
+   139                           	callstack 0
+   140  01FEDA  EC45  F0FF         	call	LCD_Clear
+   141  01FEDE  0E20               	movlw	32
+   142  01FEE0  ECC7  F0FF         	call	LCD_Send_Byte_D	; write out ascii
+   143  01FEE4  0E20               	movlw	32
+   144  01FEE6  ECC7  F0FF         	call	LCD_Send_Byte_D	; write out ascii
+   145  01FEEA  0E20               	movlw	32
+   146  01FEEC  ECC7  F0FF         	call	LCD_Send_Byte_D	; write out ascii
+   147  01FEF0  0E20               	movlw	32
+   148  01FEF2  ECC7  F0FF         	call	LCD_Send_Byte_D	; write out ascii
+   149  01FEF6  0E48               	movlw	72
+   150  01FEF8  ECC7  F0FF         	call	LCD_Send_Byte_D	; write out ascii
+   151  01FEFC  0E52               	movlw	82
+   152  01FEFE  ECC7  F0FF         	call	LCD_Send_Byte_D	; write out ascii
+   153  01FF02  0E3A               	movlw	58
+   154  01FF04  ECC7  F0FF         	call	LCD_Send_Byte_D	; write out ascii
+   155  01FF08  0E20               	movlw	32
+   156  01FF0A  ECC7  F0FF         	call	LCD_Send_Byte_D	; write out ascii
+   157  01FF0E  500C               	movf	numresulth,w,c	;move HR high byte to W
+   158  01FF10  EC4C  F0FF         	call	LCD_Write_Hex_HB	;write to LCD
+   159  01FF14  500D               	movf	numresultl,w,c	;move HR low byte to W
+   160  01FF16  EC5E  F0FF         	call	LCD_Write_Hex_LB	;write to LCD
+   161  01FF1A  0012               	return	
+   162  01FF1C                     LCD_ErrMessage:
+   163                           	callstack 0
+   164                           
+   165                           ; print message '   Adjust Fit'
+   166  01FF1C  EC45  F0FF         	call	LCD_Clear
+   167  01FF20  0E20               	movlw	32
+   168  01FF22  ECC7  F0FF         	call	LCD_Send_Byte_D
+   169  01FF26  0E20               	movlw	32
+   170  01FF28  ECC7  F0FF         	call	LCD_Send_Byte_D
+   171  01FF2C  0E20               	movlw	32
+   172  01FF2E  ECC7  F0FF         	call	LCD_Send_Byte_D
+   173  01FF32  0E41               	movlw	65
+   174  01FF34  ECC7  F0FF         	call	LCD_Send_Byte_D
+   175  01FF38  0E64               	movlw	100
+   176  01FF3A  ECC7  F0FF         	call	LCD_Send_Byte_D
+   177  01FF3E  0E6A               	movlw	106
+   178  01FF40  ECC7  F0FF         	call	LCD_Send_Byte_D
+   179  01FF44  0E75               	movlw	117
+   180  01FF46  ECC7  F0FF         	call	LCD_Send_Byte_D
+   181  01FF4A  0E73               	movlw	115
+   182  01FF4C  ECC7  F0FF         	call	LCD_Send_Byte_D
+   183  01FF50  0E74               	movlw	116
+   184  01FF52  ECC7  F0FF         	call	LCD_Send_Byte_D
+   185  01FF56  0E20               	movlw	32
+   186  01FF58  ECC7  F0FF         	call	LCD_Send_Byte_D
+   187  01FF5C  0E46               	movlw	70
+   188  01FF5E  ECC7  F0FF         	call	LCD_Send_Byte_D
+   189  01FF62  0E69               	movlw	105
+   190  01FF64  ECC7  F0FF         	call	LCD_Send_Byte_D
+   191  01FF68  0E74               	movlw	116
+   192  01FF6A  ECC7  F0FF         	call	LCD_Send_Byte_D
+   193  01FF6E  EF16  F000         	goto	count_beats
+   194  01FF72                     LCD_Send_Byte_I:
+   195                           
+   196                           ; Transmits byte stored in W to instruction reg
+   197  01FF72  6E18               	movwf	LCD_tmp,c
+   198  01FF74  3818               	swapf	LCD_tmp,w,c	; swap nibbles, high nibble goes first
+   199  01FF76  0B0F               	andlw	15	; select just low nibble
+   200  01FF78  6E8A               	movwf	3978,c	; output data bits to LCD
+   201  01FF7A  988A               	bcf	3978,4,c	; Instruction write clear RS bit
+   202  01FF7C  ECD8  F0FF         	call	LCD_Enable	; Pulse enable Bit
+   203  01FF80  5018               	movf	LCD_tmp,w,c	; swap nibbles, now do low nibble
+   204  01FF82  0B0F               	andlw	15	; select just low nibble
+   205  01FF84  6E8A               	movwf	3978,c	; output data bits to LCD
+   206  01FF86  988A               	bcf	3978,4,c	; Instruction write clear RS bit
+   207  01FF88  ECD8  F0FF         	call	LCD_Enable	; Pulse enable Bit
+   208  01FF8C  0012               	return	
+   209  01FF8E                     LCD_Send_Byte_D:
+   210                           
+   211                           ; Transmits byte stored in W to data reg
+   212  01FF8E  6E18               	movwf	LCD_tmp,c
+   213  01FF90  3818               	swapf	LCD_tmp,w,c	; swap nibbles, high nibble goes first
+   214  01FF92  0B0F               	andlw	15	; select just low nibble
+   215  01FF94  6E8A               	movwf	3978,c	; output data bits to LCD
+   216  01FF96  888A               	bsf	3978,4,c	; Data write set RS bit
+   217  01FF98  ECD8  F0FF         	call	LCD_Enable	; Pulse enable Bit
+   218  01FF9C  5018               	movf	LCD_tmp,w,c	; swap nibbles, now do low nibble
+   219  01FF9E  0B0F               	andlw	15	; select just low nibble
+   220  01FFA0  6E8A               	movwf	3978,c	; output data bits to LCD
+   221  01FFA2  888A               	bsf	3978,4,c	; Data write set RS bit
+   222  01FFA4  ECD8  F0FF         	call	LCD_Enable	; Pulse enable Bit
+   223  01FFA8  0E0A               	movlw	10	; delay 40us
+   224  01FFAA  ECF1  F0FF         	call	LCD_delay_x4us
+   225  01FFAE  0012               	return	
+   226  01FFB0                     LCD_Enable:
+   227                           
+   228                           ; pulse enable bit LCD_E for 500ns
+   229  01FFB0  0000               	nop	
+   230  01FFB2  0000               	nop	
+   231  01FFB4  0000               	nop	
+   232  01FFB6  0000               	nop	
+   233  01FFB8  0000               	nop	
+   234  01FFBA  0000               	nop	
+   235  01FFBC  0000               	nop	
+   236  01FFBE  0000               	nop	
+   237  01FFC0  8A8A               	bsf	3978,5,c	; Take enable high
+   238  01FFC2  0000               	nop	
+   239  01FFC4  0000               	nop	
+   240  01FFC6  0000               	nop	
+   241  01FFC8  0000               	nop	
+   242  01FFCA  0000               	nop	
+   243  01FFCC  0000               	nop	
+   244  01FFCE  0000               	nop	
+   245  01FFD0  9A8A               	bcf	3978,5,c	; Writes data to LCD
+   246  01FFD2  0012               	return	
+   247  01FFD4                     LCD_delay_ms:
+   248                           
+   249                           ; delay given in ms in W
+   250  01FFD4  6E17               	movwf	LCD_cnt_ms,c
+   251  01FFD6                     lcdlp2:
+   252  01FFD6  0EFA               	movlw	250	; 1 ms delay
+   253  01FFD8  ECF1  F0FF         	call	LCD_delay_x4us
+   254  01FFDC  2E17               	decfsz	LCD_cnt_ms,f,c
+   255  01FFDE  D7FB               	bra	lcdlp2
+   256  01FFE0  0012               	return	
+   257  01FFE2                     LCD_delay_x4us:
+   258                           
+   259                           ; delay given in chunks of 4 microsecond in W
+   260  01FFE2  6E15               	movwf	LCD_cnt_l,c	; now need to multiply by 16
+   261  01FFE4  3A15               	swapf	LCD_cnt_l,f,c	; swap nibbles
+   262  01FFE6  0E0F               	movlw	15
+   263  01FFE8  1415               	andwf	LCD_cnt_l,w,c	; move low nibble to W
+   264  01FFEA  6E16               	movwf	LCD_cnt_h,c	; then to LCD_cnt_h
+   265  01FFEC  0EF0               	movlw	240
+   266  01FFEE  1615               	andwf	LCD_cnt_l,f,c	; keep high nibble in LCD_cnt_l
+   267  01FFF0  ECFB  F0FF         	call	LCD_delay
+   268  01FFF4  0012               	return	
+   269  01FFF6                     LCD_delay:
+   270                           
+   271                           ; delay routine 4 instruction loop == 250ns
+   272  01FFF6  0E00               	movlw	0	; W=0
+   273  01FFF8                     lcdlp1:
+   274  01FFF8  0615               	decf	LCD_cnt_l,f,c	; no carry when 0x00 -> 0xff
+   275  01FFFA  5A16               	subwfb	LCD_cnt_h,f,c	; no carry when 0x00 -> 0xff
+   276  01FFFC  E2FD               	bc	lcdlp1	; carry, then loop again
+   277  01FFFE  0012               	return		; carry reset so return
+   278                           tosu	equ	0xFFF
+   279                           tosh	equ	0xFFE
+   280                           tosl	equ	0xFFD
+   281                           stkptr	equ	0xFFC
+   282                           pclatu	equ	0xFFB
+   283                           pclath	equ	0xFFA
+   284                           pcl	equ	0xFF9
+   285                           tblptru	equ	0xFF8
+   286                           tblptrh	equ	0xFF7
+   287                           tblptrl	equ	0xFF6
+   288                           tablat	equ	0xFF5
+   289                           prodh	equ	0xFF4
+   290                           prodl	equ	0xFF3
+   291                           indf0	equ	0xFEF
+   292                           postinc0	equ	0xFEE
+   293                           postdec0	equ	0xFED
+   294                           preinc0	equ	0xFEC
+   295                           plusw0	equ	0xFEB
+   296                           fsr0h	equ	0xFEA
+   297                           fsr0l	equ	0xFE9
+   298                           wreg	equ	0xFE8
+   299                           indf1	equ	0xFE7
+   300                           postinc1	equ	0xFE6
+   301                           postdec1	equ	0xFE5
+   302                           preinc1	equ	0xFE4
+   303                           plusw1	equ	0xFE3
+   304                           fsr1h	equ	0xFE2
+   305                           fsr1l	equ	0xFE1
+   306                           bsr	equ	0xFE0
+   307                           indf2	equ	0xFDF
+   308                           postinc2	equ	0xFDE
+   309                           postdec2	equ	0xFDD
+   310                           preinc2	equ	0xFDC
+   311                           plusw2	equ	0xFDB
+   312                           fsr2h	equ	0xFDA
+   313                           fsr2l	equ	0xFD9
+   314                           status	equ	0xFD8
+
+
+Microchip Technology PIC18 Macro Assembler V2.30 build 20200825195618 
+Symbol Table                                                                                               Thu Nov 26 15:54:25 2020
+
+                            LATB 000F8A                             LCD_E 000005                             TRISB 000F93  
+                          LCD_RS 000004                      LCD_Write_HR FEDA                            lcdlp1 FFF8  
+                          lcdlp2 FFD6                      LCD_delay_ms FFD4                           LCD_tmp 0018  
+                  LCD_Hex_Nib_HB FEA2                    LCD_Hex_Nib_LB FEC6                    LCD_ErrMessage FF1C  
+                      LCD_Enable FFB0                        LCD_cnt_ms 0017                    LCD_delay_x4us FFE2  
+                     LCD_hex_tmp 001E                       LCD_counter 0019                       count_beats 002C  
+                 LCD_Send_Byte_D FF8E                   LCD_Send_Byte_I FF72                  LCD_Write_Hex_HB FE98  
+                LCD_Write_Hex_LB FEBC                         LCD_Clear FE8A                         LCD_Setup FE34  
+                       LCD_delay FFF6                         LCD_cnt_h 0016                         LCD_cnt_l 0015  
+                      numresulth 000C                        numresultl 000D  

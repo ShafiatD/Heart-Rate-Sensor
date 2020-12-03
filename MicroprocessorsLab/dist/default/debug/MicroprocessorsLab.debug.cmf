@@ -1,0 +1,692 @@
+%CMF
+# %PSECTS Section
+# For each object file, details of its psects are enumerated here.
+# The begining of the section is indicated by %PSECTS.  The first
+# line indicates the name of the first object file, e.g.
+#    $foo.obj
+# Each line that follows describes a psect in that object file, until
+# the next object file.  The lines that describe a psect have the
+# format:
+#    <psect name> <class name> <space> <link address> <load addresses> <length> <delta>
+# All addresses and the length are given in unqualified hexadecimal
+# in delta units.  Any other numeric values are decimal.
+%PSECTS
+$build/default/debug/config.o
+config CONFIG 4 300000 300000 E 1
+$build/default/debug/Heart_Rate.o
+heartrate_code CODE 0 1FC8A 1FC8A 94 1
+udata_acs COMRAM 1 F F 6 1
+$build/default/debug/ADC.o
+adc_code CODE 0 1FD1E 1FD1E 116 1
+udata_acs COMRAM 1 0 0 F 1
+$build/default/debug/Int.o
+udata_acs COMRAM 1 1A 1A 2 1
+dac_code CODE 0 1FC1A 1FC1A 70 1
+$build/default/debug/LCD.o
+udata_acs_ovr COMRAM 1 1E 1E 1 1
+udata_acs COMRAM 1 15 15 5 1
+lcd_code CODE 0 1FE34 1FE34 1CC 1
+$build/default/debug/main.o
+code CODE 0 0 0 7A 1
+udata_acs COMRAM 1 1C 1C 2 1
+config CONFIG 4 300000 300000 E 1
+# %UNUSED Section
+# This section enumerates the unused ranges of each CLASS. Each entry
+# is described on a single line as follows:
+#    <class name> <range> <delta>
+# Addresses given in the range are in hexadecimal and units of delta.
+%UNUSED
+RAM 60-F15 1
+SFR F16-FFF 1
+BANK0 60-FF 1
+BANK1 100-1FF 1
+BANK2 200-2FF 1
+BANK3 300-3FF 1
+BANK4 400-4FF 1
+BANK5 500-5FF 1
+BANK6 600-6FF 1
+BANK7 700-7FF 1
+BANK8 800-8FF 1
+BANK9 900-9FF 1
+CONST 7A-1FC19 1
+IDLOC 200000-200007 1
+SMALLCONST 1000-1FC19 1
+CODE 7A-1FC19 1
+BANK10 A00-AFF 1
+BANK11 B00-BFF 1
+BANK12 C00-CFF 1
+BANK13 D00-DFF 1
+BANK14 E00-EFF 1
+BANK15 F00-F15 1
+BIGRAM 7A-F15 1
+COMRAM 1F-5F 1
+EEDATA F00000-F003FF 1
+MEDIUMCONST 1000-FFFF 1
+MEDIUMCONST 11000-1FC19 1
+# %LINETAB Section
+# This section enumerates the file/line to address mappings.
+# The beginning of the section is indicated by %LINETAB.
+# The first line indicates the name of the first object file, e.g.
+#   $foo.obj
+# Each line that follows describes a single mapping until the next
+# object file.  Mappings have the following format:
+#    <address> <psect name> <class name> ><line number>:<file name>
+# The address is absolute and given given in unqualified hex 
+# in delta units of the psect. All mappings within an object file
+# are in ascending order of addresses.
+# All other numeric values are in decimal.
+%LINETAB
+$build/default/debug/Heart_Rate.o
+1FC8A heartrate_code CODE >15:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FC8A heartrate_code CODE >16:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FC8C heartrate_code CODE >17:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FC8E heartrate_code CODE >18:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FC90 heartrate_code CODE >19:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FC92 heartrate_code CODE >20:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FC94 heartrate_code CODE >21:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FC96 heartrate_code CODE >22:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FC98 heartrate_code CODE >23:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FC9A heartrate_code CODE >24:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FC9C heartrate_code CODE >25:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FC9E heartrate_code CODE >26:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCA0 heartrate_code CODE >27:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCA4 heartrate_code CODE >28:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCA4 heartrate_code CODE >29:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCA6 heartrate_code CODE >30:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCA8 heartrate_code CODE >31:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCAC heartrate_code CODE >32:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCAE heartrate_code CODE >34:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCAE heartrate_code CODE >35:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCB2 heartrate_code CODE >36:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCB4 heartrate_code CODE >37:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCB6 heartrate_code CODE >38:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCBA heartrate_code CODE >39:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCBC heartrate_code CODE >40:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCBC heartrate_code CODE >41:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCBE heartrate_code CODE >42:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCC2 heartrate_code CODE >43:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCC4 heartrate_code CODE >44:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCC6 heartrate_code CODE >45:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCCA heartrate_code CODE >46:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCCC heartrate_code CODE >48:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCCC heartrate_code CODE >49:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCCE heartrate_code CODE >50:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCD0 heartrate_code CODE >51:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCD0 heartrate_code CODE >52:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCD2 heartrate_code CODE >53:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCD6 heartrate_code CODE >54:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCD8 heartrate_code CODE >55:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCDC heartrate_code CODE >56:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCE0 heartrate_code CODE >57:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCE0 heartrate_code CODE >58:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCE2 heartrate_code CODE >59:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCE6 heartrate_code CODE >60:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCE8 heartrate_code CODE >61:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCEA heartrate_code CODE >62:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCEE heartrate_code CODE >63:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCEE heartrate_code CODE >64:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCF0 heartrate_code CODE >65:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCF2 heartrate_code CODE >66:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCF4 heartrate_code CODE >67:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCF4 heartrate_code CODE >68:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCF6 heartrate_code CODE >69:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCF8 heartrate_code CODE >70:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCFA heartrate_code CODE >71:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCFA heartrate_code CODE >72:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FCFE heartrate_code CODE >73:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD00 heartrate_code CODE >74:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD04 heartrate_code CODE >75:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD08 heartrate_code CODE >77:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD08 heartrate_code CODE >78:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD0A heartrate_code CODE >79:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD0C heartrate_code CODE >80:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD10 heartrate_code CODE >81:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD12 heartrate_code CODE >82:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD12 heartrate_code CODE >83:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD14 heartrate_code CODE >84:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD16 heartrate_code CODE >85:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD1A heartrate_code CODE >86:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+1FD1C heartrate_code CODE >87:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Heart_Rate.s
+$build/default/debug/ADC.o
+1FD1E adc_code CODE >25:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD1E adc_code CODE >26:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD20 adc_code CODE >27:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD22 adc_code CODE >28:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD24 adc_code CODE >29:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD26 adc_code CODE >30:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD28 adc_code CODE >31:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD2A adc_code CODE >32:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD2C adc_code CODE >33:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD2E adc_code CODE >34:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD30 adc_code CODE >35:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD32 adc_code CODE >36:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD34 adc_code CODE >37:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD36 adc_code CODE >38:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD38 adc_code CODE >39:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD3A adc_code CODE >40:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD3C adc_code CODE >42:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD3C adc_code CODE >43:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD3E adc_code CODE >44:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD3E adc_code CODE >45:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD40 adc_code CODE >46:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD42 adc_code CODE >47:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD44 adc_code CODE >49:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD44 adc_code CODE >50:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD46 adc_code CODE >51:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD48 adc_code CODE >52:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD4A adc_code CODE >53:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD4C adc_code CODE >54:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD4E adc_code CODE >55:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD50 adc_code CODE >56:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD54 adc_code CODE >57:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD58 adc_code CODE >58:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD5A adc_code CODE >59:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD5C adc_code CODE >60:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD5E adc_code CODE >61:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD60 adc_code CODE >62:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD62 adc_code CODE >63:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD64 adc_code CODE >64:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD64 adc_code CODE >65:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD66 adc_code CODE >66:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD68 adc_code CODE >67:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD6A adc_code CODE >68:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD6C adc_code CODE >69:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD6E adc_code CODE >70:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD72 adc_code CODE >71:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD76 adc_code CODE >72:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD7A adc_code CODE >73:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD7E adc_code CODE >74:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD82 adc_code CODE >75:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD86 adc_code CODE >76:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD8A adc_code CODE >77:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD8C adc_code CODE >78:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD8E adc_code CODE >79:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD90 adc_code CODE >80:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD92 adc_code CODE >81:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD94 adc_code CODE >82:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD96 adc_code CODE >83:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD98 adc_code CODE >84:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD98 adc_code CODE >85:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD9A adc_code CODE >86:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD9C adc_code CODE >87:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FD9E adc_code CODE >88:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDA0 adc_code CODE >89:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDA2 adc_code CODE >90:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDA6 adc_code CODE >91:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDAA adc_code CODE >92:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDAE adc_code CODE >93:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDB2 adc_code CODE >94:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDB6 adc_code CODE >95:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDBA adc_code CODE >96:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDBE adc_code CODE >97:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDC0 adc_code CODE >98:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDC2 adc_code CODE >99:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDC4 adc_code CODE >100:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDC6 adc_code CODE >101:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDC8 adc_code CODE >102:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDCA adc_code CODE >103:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDCC adc_code CODE >104:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDCE adc_code CODE >105:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDD0 adc_code CODE >106:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDD0 adc_code CODE >107:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDD2 adc_code CODE >108:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDD4 adc_code CODE >109:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDD6 adc_code CODE >110:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDDA adc_code CODE >111:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDDE adc_code CODE >112:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDE0 adc_code CODE >113:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDE2 adc_code CODE >114:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDE4 adc_code CODE >115:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDE6 adc_code CODE >116:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDEA adc_code CODE >117:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDEC adc_code CODE >118:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDEE adc_code CODE >119:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDF0 adc_code CODE >120:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDF4 adc_code CODE >121:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDF8 adc_code CODE >122:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FDFC adc_code CODE >123:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE00 adc_code CODE >124:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE04 adc_code CODE >125:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE06 adc_code CODE >126:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE08 adc_code CODE >127:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE0C adc_code CODE >128:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE10 adc_code CODE >129:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE14 adc_code CODE >130:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE18 adc_code CODE >131:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE1A adc_code CODE >132:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE1C adc_code CODE >133:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE1E adc_code CODE >134:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE22 adc_code CODE >135:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE26 adc_code CODE >136:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE2A adc_code CODE >137:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE2E adc_code CODE >138:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE30 adc_code CODE >139:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+1FE32 adc_code CODE >140:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\ADC.S
+$build/default/debug/Int.o
+1FC1A dac_code CODE >12:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC1A dac_code CODE >13:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC1C dac_code CODE >14:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC1E dac_code CODE >15:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC20 dac_code CODE >16:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC22 dac_code CODE >17:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC24 dac_code CODE >19:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC24 dac_code CODE >20:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC26 dac_code CODE >21:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC28 dac_code CODE >22:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC2A dac_code CODE >23:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC2C dac_code CODE >24:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC2E dac_code CODE >25:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC30 dac_code CODE >26:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC32 dac_code CODE >28:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC32 dac_code CODE >29:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC34 dac_code CODE >30:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC36 dac_code CODE >31:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC38 dac_code CODE >32:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC3A dac_code CODE >33:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC3C dac_code CODE >34:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC3E dac_code CODE >35:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC42 dac_code CODE >36:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC44 dac_code CODE >37:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC46 dac_code CODE >38:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC4A dac_code CODE >39:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC4E dac_code CODE >40:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC50 dac_code CODE >41:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC52 dac_code CODE >42:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC54 dac_code CODE >43:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC56 dac_code CODE >44:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC58 dac_code CODE >45:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC5C dac_code CODE >47:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC5C dac_code CODE >48:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC5E dac_code CODE >49:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC60 dac_code CODE >50:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC62 dac_code CODE >51:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC64 dac_code CODE >52:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC68 dac_code CODE >54:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC68 dac_code CODE >55:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC6A dac_code CODE >56:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC6C dac_code CODE >57:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC70 dac_code CODE >58:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC72 dac_code CODE >59:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC74 dac_code CODE >60:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC78 dac_code CODE >61:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC7A dac_code CODE >62:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC7C dac_code CODE >63:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC7E dac_code CODE >64:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC80 dac_code CODE >65:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC82 dac_code CODE >66:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC86 dac_code CODE >68:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC86 dac_code CODE >69:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+1FC88 dac_code CODE >70:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\Int.s
+$build/default/debug/LCD.o
+1FE34 lcd_code CODE >21:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE34 lcd_code CODE >22:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE36 lcd_code CODE >23:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE38 lcd_code CODE >24:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE3A lcd_code CODE >25:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE3C lcd_code CODE >26:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE40 lcd_code CODE >27:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE42 lcd_code CODE >28:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE46 lcd_code CODE >29:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE48 lcd_code CODE >30:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE4C lcd_code CODE >31:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE4E lcd_code CODE >32:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE52 lcd_code CODE >33:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE54 lcd_code CODE >34:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE58 lcd_code CODE >35:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE5A lcd_code CODE >36:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE5E lcd_code CODE >37:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE60 lcd_code CODE >38:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE64 lcd_code CODE >39:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE66 lcd_code CODE >40:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE6A lcd_code CODE >41:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE6C lcd_code CODE >42:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE70 lcd_code CODE >43:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE72 lcd_code CODE >44:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE76 lcd_code CODE >45:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE78 lcd_code CODE >46:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE7C lcd_code CODE >47:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE7E lcd_code CODE >48:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE82 lcd_code CODE >49:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE84 lcd_code CODE >50:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE88 lcd_code CODE >51:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE8A lcd_code CODE >53:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE8A lcd_code CODE >54:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE8C lcd_code CODE >55:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE90 lcd_code CODE >56:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE92 lcd_code CODE >57:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE96 lcd_code CODE >58:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE98 lcd_code CODE >60:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE98 lcd_code CODE >61:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE9A lcd_code CODE >62:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FE9C lcd_code CODE >63:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEA0 lcd_code CODE >64:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEA2 lcd_code CODE >65:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEA2 lcd_code CODE >66:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEA4 lcd_code CODE >67:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEA6 lcd_code CODE >68:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEA8 lcd_code CODE >69:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEAA lcd_code CODE >70:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEAC lcd_code CODE >71:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEAE lcd_code CODE >72:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEB0 lcd_code CODE >73:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEB2 lcd_code CODE >74:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEB4 lcd_code CODE >75:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEB6 lcd_code CODE >76:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEBA lcd_code CODE >77:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEBC lcd_code CODE >79:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEBC lcd_code CODE >80:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEBE lcd_code CODE >81:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEC0 lcd_code CODE >82:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEC4 lcd_code CODE >83:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEC6 lcd_code CODE >84:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEC6 lcd_code CODE >85:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEC8 lcd_code CODE >86:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FECA lcd_code CODE >87:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FECC lcd_code CODE >88:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FECE lcd_code CODE >89:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FED0 lcd_code CODE >90:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FED2 lcd_code CODE >91:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FED4 lcd_code CODE >92:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FED8 lcd_code CODE >93:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEDA lcd_code CODE >95:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEDA lcd_code CODE >96:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEDE lcd_code CODE >97:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEE0 lcd_code CODE >98:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEE4 lcd_code CODE >99:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEE6 lcd_code CODE >100:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEEA lcd_code CODE >101:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEEC lcd_code CODE >102:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEF0 lcd_code CODE >103:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEF2 lcd_code CODE >104:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEF6 lcd_code CODE >105:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEF8 lcd_code CODE >106:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEFC lcd_code CODE >107:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FEFE lcd_code CODE >108:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF02 lcd_code CODE >109:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF04 lcd_code CODE >110:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF08 lcd_code CODE >111:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF0A lcd_code CODE >112:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF0E lcd_code CODE >113:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF10 lcd_code CODE >114:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF14 lcd_code CODE >115:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF16 lcd_code CODE >116:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF1A lcd_code CODE >117:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF1C lcd_code CODE >119:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF1C lcd_code CODE >120:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF20 lcd_code CODE >121:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF22 lcd_code CODE >122:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF26 lcd_code CODE >123:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF28 lcd_code CODE >124:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF2C lcd_code CODE >125:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF2E lcd_code CODE >126:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF32 lcd_code CODE >127:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF34 lcd_code CODE >128:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF38 lcd_code CODE >129:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF3A lcd_code CODE >130:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF3E lcd_code CODE >131:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF40 lcd_code CODE >132:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF44 lcd_code CODE >133:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF46 lcd_code CODE >134:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF4A lcd_code CODE >135:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF4C lcd_code CODE >136:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF50 lcd_code CODE >137:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF52 lcd_code CODE >138:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF56 lcd_code CODE >139:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF58 lcd_code CODE >140:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF5C lcd_code CODE >141:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF5E lcd_code CODE >142:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF62 lcd_code CODE >143:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF64 lcd_code CODE >144:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF68 lcd_code CODE >145:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF6A lcd_code CODE >146:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF6E lcd_code CODE >147:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF72 lcd_code CODE >149:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF72 lcd_code CODE >150:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF74 lcd_code CODE >151:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF76 lcd_code CODE >152:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF78 lcd_code CODE >153:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF7A lcd_code CODE >154:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF7C lcd_code CODE >155:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF80 lcd_code CODE >156:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF82 lcd_code CODE >157:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF84 lcd_code CODE >158:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF86 lcd_code CODE >159:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF88 lcd_code CODE >160:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF8C lcd_code CODE >161:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF8E lcd_code CODE >163:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF8E lcd_code CODE >164:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF90 lcd_code CODE >165:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF92 lcd_code CODE >166:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF94 lcd_code CODE >167:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF96 lcd_code CODE >168:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF98 lcd_code CODE >169:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF9C lcd_code CODE >170:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FF9E lcd_code CODE >171:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFA0 lcd_code CODE >172:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFA2 lcd_code CODE >173:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFA4 lcd_code CODE >174:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFA8 lcd_code CODE >175:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFAA lcd_code CODE >176:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFAE lcd_code CODE >177:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFB0 lcd_code CODE >179:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFB0 lcd_code CODE >180:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFB2 lcd_code CODE >181:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFB4 lcd_code CODE >182:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFB6 lcd_code CODE >183:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFB8 lcd_code CODE >184:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFBA lcd_code CODE >185:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFBC lcd_code CODE >186:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFBE lcd_code CODE >187:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFC0 lcd_code CODE >188:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFC2 lcd_code CODE >189:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFC4 lcd_code CODE >190:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFC6 lcd_code CODE >191:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFC8 lcd_code CODE >192:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFCA lcd_code CODE >193:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFCC lcd_code CODE >194:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFCE lcd_code CODE >195:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFD0 lcd_code CODE >196:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFD2 lcd_code CODE >197:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFD4 lcd_code CODE >200:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFD4 lcd_code CODE >201:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFD6 lcd_code CODE >202:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFD8 lcd_code CODE >203:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFDC lcd_code CODE >204:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFDE lcd_code CODE >205:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFE0 lcd_code CODE >206:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFE2 lcd_code CODE >208:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFE2 lcd_code CODE >209:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFE4 lcd_code CODE >210:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFE6 lcd_code CODE >211:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFE8 lcd_code CODE >212:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFEA lcd_code CODE >213:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFEC lcd_code CODE >214:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFEE lcd_code CODE >215:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFF0 lcd_code CODE >216:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFF4 lcd_code CODE >217:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFF6 lcd_code CODE >219:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFF6 lcd_code CODE >220:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFF8 lcd_code CODE >221:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFFA lcd_code CODE >222:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFFC lcd_code CODE >223:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+1FFFE lcd_code CODE >224:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\LCD.S
+$build/default/debug/main.o
+0 code CODE >13:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+0 code CODE >14:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+4 code CODE >16:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+8 code CODE >17:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+C code CODE >19:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+C code CODE >20:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+10 code CODE >21:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+14 code CODE >22:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+18 code CODE >23:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+1C code CODE >24:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+20 code CODE >25:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+24 code CODE >28:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+24 code CODE >29:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+28 code CODE >30:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+2C code CODE >31:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+2C code CODE >32:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+2E code CODE >33:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+30 code CODE >34:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+32 code CODE >35:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+34 code CODE >36:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+38 code CODE >37:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+3A code CODE >38:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+3C code CODE >39:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+40 code CODE >40:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+44 code CODE >41:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+44 code CODE >42:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+46 code CODE >43:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+48 code CODE >44:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+4A code CODE >45:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+4E code CODE >46:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+50 code CODE >47:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+52 code CODE >48:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+56 code CODE >49:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+58 code CODE >50:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+5A code CODE >51:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+5E code CODE >52:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+60 code CODE >53:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+62 code CODE >54:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+66 code CODE >55:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+6A code CODE >56:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+6E code CODE >57:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+72 code CODE >58:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+76 code CODE >59:H:\Lab\year 3\Photoplethysmography\MicroprocessorsLab\main.S
+# %SYMTAB Section
+# An enumeration of all symbols in the program.
+# The beginning of the section is indicated by %SYMTAB.
+# Each line describes a single symbol as follows:
+#    <label> <value> [-]<load-adj> <class> <space> <psect> <file-name>
+# The value and load-adj are both in unqualified hexadecimal.
+# All other numeric values are in decimal.  The load-adj is the
+# quantity one needs to add to the symbol value in order to obtain the load
+# address of the symbol.  This value may be signed. If the symbol
+# was defined in a psect then <psect> will be "-". File-name
+# is the name of the object file in which the symbol was defined.
+%SYMTAB
+__Ladc_code 0 0 ABS 0 adc_code -
+numresulth C 0 COMRAM 1 udata_acs build/default/debug/ADC.o
+numresultl D 0 COMRAM 1 udata_acs build/default/debug/ADC.o
+__Hspace_0 20000 0 ABS 0 - -
+__Hspace_1 1F 0 ABS 0 - -
+__Hspace_3 0 0 ABS 0 - -
+__Hspace_4 60000E 0 ABS 0 - -
+Int_Main 1FC32 0 CODE 0 dac_code build/default/debug/Int.o
+__Hudata_bank0 0 0 ABS 0 udata_bank0 -
+__Hudata_bank1 0 0 ABS 0 udata_bank1 -
+__Hudata_bank2 0 0 ABS 0 udata_bank2 -
+__Hudata_bank3 0 0 ABS 0 udata_bank3 -
+__Hudata_bank4 0 0 ABS 0 udata_bank4 -
+__Hudata_bank5 0 0 ABS 0 udata_bank5 -
+__Hudata_bank6 0 0 ABS 0 udata_bank6 -
+__Hudata_bank7 0 0 ABS 0 udata_bank7 -
+__Hudata_bank8 0 0 ABS 0 udata_bank8 -
+__Hudata_bank9 0 0 ABS 0 udata_bank9 -
+__Hlcd_code 0 0 ABS 0 lcd_code -
+__Hdac_code 0 0 ABS 0 dac_code -
+__Ludata_acs_ovr 1E 0 COMRAM 1 udata_acs_ovr -
+LCD_ErrMessage 1FF1C 0 CODE 0 lcd_code build/default/debug/LCD.o
+__Hadc_code 0 0 ABS 0 adc_code -
+__Hudata_acs_ovr 1F 0 COMRAM 1 udata_acs_ovr -
+HR_Next_Beat 1FCF4 0 CODE 0 heartrate_code build/default/debug/Heart_Rate.o
+__Hudata_bank10 0 0 ABS 0 udata_bank10 -
+__Hudata_bank11 0 0 ABS 0 udata_bank11 -
+__Hudata_bank12 0 0 ABS 0 udata_bank12 -
+__Hudata_bank13 0 0 ABS 0 udata_bank13 -
+__Hudata_bank14 0 0 ABS 0 udata_bank14 -
+__Hudata_bank15 0 0 ABS 0 udata_bank15 -
+ADC_Setup 1FD1E 0 CODE 0 adc_code build/default/debug/ADC.o
+__Lheartrate_code 0 0 ABS 0 heartrate_code -
+hresult 1C 0 COMRAM 1 udata_acs build/default/debug/main.o
+__Hedata 0 0 ABS 0 edata -
+__Hudata 0 0 ABS 0 udata -
+__Hconfig 30000E 0 CONFIG 4 config -
+__Ledata 0 0 ABS 0 edata -
+__Ludata 0 0 ABS 0 udata -
+Int_Setup 1FC1A 0 CODE 0 dac_code build/default/debug/Int.o
+__Hcode 0 0 ABS 0 code -
+__Hdata 0 0 ABS 0 data -
+__Lcode 0 0 ABS 0 code -
+__Ldata 0 0 ABS 0 data -
+HR_Setup 1FC8A 0 CODE 0 heartrate_code build/default/debug/Heart_Rate.o
+HR_Count_beats 1FCCC 0 CODE 0 heartrate_code build/default/debug/Heart_Rate.o
+__S0 20000 0 ABS 0 - -
+__S1 1F 0 ABS 0 - -
+__S3 0 0 ABS 0 - -
+Analysis_and_output 44 0 CODE 0 code build/default/debug/main.o
+__Ludata_bank10 0 0 ABS 0 udata_bank10 -
+__Ludata_bank11 0 0 ABS 0 udata_bank11 -
+__Ludata_bank12 0 0 ABS 0 udata_bank12 -
+__Ludata_bank13 0 0 ABS 0 udata_bank13 -
+__Ludata_bank14 0 0 ABS 0 udata_bank14 -
+__Ludata_bank15 0 0 ABS 0 udata_bank15 -
+ADC_Read 1FD3C 0 CODE 0 adc_code build/default/debug/ADC.o
+lresult 1D 0 COMRAM 1 udata_acs build/default/debug/main.o
+HR_Look_for_beat 1FCAE 0 CODE 0 heartrate_code build/default/debug/Heart_Rate.o
+__Lconfig 0 0 CONFIG 4 config -
+LCD_Write_HR 1FEDA 0 CODE 0 lcd_code build/default/debug/LCD.o
+LCD_Setup 1FE34 0 CODE 0 lcd_code build/default/debug/LCD.o
+__Lspace_0 0 0 ABS 0 - -
+__Lspace_1 0 0 ABS 0 - -
+__Lspace_3 0 0 ABS 0 - -
+__Lspace_4 0 0 ABS 0 - -
+Int_Start_interrupt 1FC24 0 CODE 0 dac_code build/default/debug/Int.o
+HR_Calculate 1FD08 0 CODE 0 heartrate_code build/default/debug/Heart_Rate.o
+count_beats 2C 0 CODE 0 code build/default/debug/main.o
+__Hheartrate_code 0 0 ABS 0 heartrate_code -
+__Ludata_bank0 0 0 ABS 0 udata_bank0 -
+__Ludata_bank1 0 0 ABS 0 udata_bank1 -
+__Ludata_bank2 0 0 ABS 0 udata_bank2 -
+__Ludata_bank3 0 0 ABS 0 udata_bank3 -
+__Ludata_bank4 0 0 ABS 0 udata_bank4 -
+__Ludata_bank5 0 0 ABS 0 udata_bank5 -
+__Ludata_bank6 0 0 ABS 0 udata_bank6 -
+__Ludata_bank7 0 0 ABS 0 udata_bank7 -
+__Ludata_bank8 0 0 ABS 0 udata_bank8 -
+__Ludata_bank9 0 0 ABS 0 udata_bank9 -
+__Llcd_code 0 0 ABS 0 lcd_code -
+__Ldac_code 0 0 ABS 0 dac_code -
+__Hudata_acs 0 0 ABS 0 udata_acs -
+HR_Add_Beat 1FCEE 0 CODE 0 heartrate_code build/default/debug/Heart_Rate.o
+HR_reset_var 14 0 COMRAM 1 udata_acs build/default/debug/Heart_Rate.o
+ADC_hextodec 1FDD0 0 CODE 0 adc_code build/default/debug/ADC.o
+__Ludata_acs 0 0 ABS 0 udata_acs -
+# %SPLITSTAB Section
+# This section enumerates all the psect splits performed by the assembler.
+# The beginning of the section is indicated by %SPLITSTAB.
+# Each line is a record a particular split, where the parent psect is on
+# the left and the child on the right.  Note that a child psect is always
+# split form the top of the parent psect. All splits from a given parent
+# are listed in the order in which they occurred.
+%SPLITSTAB
+# %DABS Section
+# This section contains a table of all usuage of the assember
+# directive DABS in the program. Each line has the following format:
+#   <name> <space> <address> <size>
+# If the DABS was originally labelled then that shall be <name>,
+# otherwise name will be "-".  The <space> number is in decimal.
+# <address> and <size> are in byte units as unqaulified hexadecimal
+%DABS
+# %SEGMENTS Section
+# This sections enumerates the segments of the program.  Each segment
+# is described on a single line as follows:
+#    <name> <space> <link address> <file address> <size> <delta>
+# Addresses and size are in unqualified hexadecimal.  The link address
+# and size are in units of delta. The file address is in units of bytes.
+# All other numeric quantities are in decimal.
+%SEGMENTS
+adc_code 0 1FD1E 1FD1E 116 1
+heartrate_code 0 1FC8A 1FC8A 94 1
+udata_acs 1 0 0 1F 1
+lcd_code 0 1FE34 1FE34 1CC 1
+dac_code 0 1FC1A 1FC1A 70 1
+# %NOTES Section
+# This section contains data of all the note-psects.  The beginning of the section
+# is indicated by %NOTES. The first line indicates the name and decimal
+# byte-length of the first note-psect, e.g.
+#   $codecov_info_hdr 16
+# Each line that follows contains the byte-data of the psect in hexadecimal as a
+# space-separated list. These lines are limited to 16 bytes of data.
+%NOTES

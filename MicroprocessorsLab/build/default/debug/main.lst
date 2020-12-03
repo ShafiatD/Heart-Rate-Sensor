@@ -1,0 +1,153 @@
+
+
+Microchip MPLAB XC8 Assembler V2.30 build 20200825195618 
+                                                                                                           Thu Nov 26 15:31:16 2020
+
+
+     1                           	processor	18F87K22
+     2                           	pagewidth 132
+     3                           	psect	udata_acs,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     4                           	psect	udata_bank0,global,class=BANK0,space=1,delta=1,lowdata,noexec
+     5                           	psect	udata_bank1,global,class=BANK1,space=1,delta=1,lowdata,noexec
+     6                           	psect	udata_bank2,global,class=BANK2,space=1,delta=1,lowdata,noexec
+     7                           	psect	udata_bank3,global,class=BANK3,space=1,delta=1,lowdata,noexec
+     8                           	psect	udata_bank4,global,class=BANK4,space=1,delta=1,lowdata,noexec
+     9                           	psect	udata_bank5,global,class=BANK5,space=1,delta=1,lowdata,noexec
+    10                           	psect	udata_bank6,global,class=BANK6,space=1,delta=1,lowdata,noexec
+    11                           	psect	udata_bank7,global,class=BANK7,space=1,delta=1,lowdata,noexec
+    12                           	psect	udata_bank8,global,class=BANK8,space=1,delta=1,lowdata,noexec
+    13                           	psect	udata_bank9,global,class=BANK9,space=1,delta=1,lowdata,noexec
+    14                           	psect	udata_bank10,global,class=BANK10,space=1,delta=1,lowdata,noexec
+    15                           	psect	udata_bank11,global,class=BANK11,space=1,delta=1,lowdata,noexec
+    16                           	psect	udata_bank12,global,class=BANK12,space=1,delta=1,lowdata,noexec
+    17                           	psect	udata_bank13,global,class=BANK13,space=1,delta=1,lowdata,noexec
+    18                           	psect	udata_bank14,global,class=BANK14,space=1,delta=1,lowdata,noexec
+    19                           	psect	udata_bank15,global,class=BANK15,space=1,delta=1,lowdata,noexec
+    20                           	psect	udata,global,class=RAM,space=1,delta=1,noexec
+    21                           	psect	code,global,abs,reloc=2,class=CODE,delta=1
+    22                           	psect	data,global,reloc=2,class=CONST,delta=1,noexec
+    23                           	psect	edata,global,class=EEDATA,space=3,delta=2,noexec
+    24  0000                     
+    25                           	psect	udata_acs
+    26  00001C                     hresult:
+    27                           	callstack 0
+    28  00001C                     	ds	1	; reserve one byte for the high byte of the hextodec result
+    29  00001D                     lresult:
+    30                           	callstack 0
+    31  00001D                     	ds	1	; reserve one byte for the low byte of the hextodec result
+    32                           
+    33                           	psect	code
+    34  000000                     rst:
+    35  000000                     	org	0
+    36  000000  EF06  F000         	goto	setup
+    37  000008                     	org	8	; high vector, no low vector
+    38  000008  EF19  F0FE         	goto	Int_Main
+    39  00000C                     setup:
+    40  00000C  EE00 F080          	lfsr	0,128
+    41  000010  EC1A  F0FF         	call	LCD_Setup	; setup LCD
+    42  000014  EC8F  F0FE         	call	ADC_Setup	; setup ADC
+    43  000018  EC0D  F0FE         	call	Int_Setup	; setup Int
+    44  00001C  EC45  F0FE         	call	HR_Setup	; setup HR
+    45  000020  EF12  F000         	goto	start
+    46  000024                     start:
+    47  000024  EC57  F0FE         	call	HR_Look_for_beat	; call look for beat routine
+    48  000028  EC12  F0FE         	call	Int_Start_interrupt	; call routine to start interrupt
+    49  00002C                     count_beats:
+    50                           	callstack 0
+    51  00002C  0E00               	movlw	0	; clear file register to be counted in
+    52  00002E  6EEF               	movwf	indf0,c
+    53  000030  0E01               	movlw	1	; check if reset variable is >1
+    54  000032  6414               	cpfsgt	HR_reset_var,c
+    55  000034  EC66  F0FE         	call	HR_Count_beats	; if =1 call count beat routine
+    56  000038  0E02               	movlw	2	; check if reset variable is >2
+    57  00003A  6414               	cpfsgt	HR_reset_var,c
+    58  00003C  EC77  F0FE         	call	HR_Add_Beat	; if =2 call add beat routine
+    59  000040  EC7A  F0FE         	call	HR_Next_Beat	; else if =3 call next beat routine
+    60  000044                     Analysis_and_output:
+    61                           	callstack 0
+    62  000044  0E01               	movlw	1	; reset stack pointer if unbalanced
+    63  000046  62FC               	cpfseq	stkptr,c
+    64  000048  0006               	pop	
+    65  00004A  EC84  F0FE         	call	HR_Calculate	; call rate calculation routine
+    66  00004E  0E28               	movlw	40
+    67  000050  64F3               	cpfsgt	prodl,c	; if low byte is less than 40, show error
+    68  000052  EF8E  F0FF         	goto	LCD_ErrMessage
+    69  000056  0EC8               	movlw	200
+    70  000058  60F3               	cpfslt	prodl,c	; if low byte is more than 200 show error
+    71  00005A  EF8E  F0FF         	goto	LCD_ErrMessage
+    72  00005E  0E01               	movlw	1
+    73  000060  60F4               	cpfslt	prodh,c	; if high byte is more than 0 show error
+    74  000062  EF8E  F0FF         	goto	LCD_ErrMessage
+    75  000066  CFF3 F01D          	movff	prodl,lresult	; move heartrate low byte to l result register
+    76  00006A  CFF4 F01C          	movff	prodh,hresult	; move heartrate high byte to h result register
+    77  00006E  ECE8  F0FE         	call	ADC_hextodec	; convert heartrate from hex to decimal
+    78  000072  EC6D  F0FF         	call	LCD_Write_HR	; call LCD HR write code
+    79  000076  EF16  F000         	goto	count_beats	; count the next beat
+    80                           
+    81                           	psect	edata
+    82  0000                     stk_offset	set	0
+    83  0000                     auto_size	set	0
+    84                           
+    85                           ; stack_auto defines a symbol /name/_offset which equates to the
+    86                           ; stack offset of the auto object in question
+    87  000000                     
+    88                           ; stack_param defines a symbol /name/_offset which equates to the
+    89                           ; stack offset of the parameter object in question
+    90  000000                     
+    91                           ; alloc_stack adjusts the SP to allocate space for auto objects
+    92                           ; it also links in to the btemp symbol so that can be used
+    93  000000                     
+    94                           ; restore_stack adjusts the SP to remove all auto and parameter
+    95                           ; objects from the stack prior to returning from a function
+    96  000000                     tosu	equ	0xFFF
+    97                           tosh	equ	0xFFE
+    98                           tosl	equ	0xFFD
+    99                           stkptr	equ	0xFFC
+   100                           pclatu	equ	0xFFB
+   101                           pclath	equ	0xFFA
+   102                           pcl	equ	0xFF9
+   103                           tblptru	equ	0xFF8
+   104                           tblptrh	equ	0xFF7
+   105                           tblptrl	equ	0xFF6
+   106                           tablat	equ	0xFF5
+   107                           prodh	equ	0xFF4
+   108                           prodl	equ	0xFF3
+   109                           indf0	equ	0xFEF
+   110                           postinc0	equ	0xFEE
+   111                           postdec0	equ	0xFED
+   112                           preinc0	equ	0xFEC
+   113                           plusw0	equ	0xFEB
+   114                           fsr0h	equ	0xFEA
+   115                           fsr0l	equ	0xFE9
+   116                           wreg	equ	0xFE8
+   117                           indf1	equ	0xFE7
+   118                           postinc1	equ	0xFE6
+   119                           postdec1	equ	0xFE5
+   120                           preinc1	equ	0xFE4
+   121                           plusw1	equ	0xFE3
+   122                           fsr1h	equ	0xFE2
+   123                           fsr1l	equ	0xFE1
+   124                           bsr	equ	0xFE0
+   125                           indf2	equ	0xFDF
+   126                           postinc2	equ	0xFDE
+   127                           postdec2	equ	0xFDD
+   128                           preinc2	equ	0xFDC
+   129                           plusw2	equ	0xFDB
+   130                           fsr2h	equ	0xFDA
+   131                           fsr2l	equ	0xFD9
+   132                           status	equ	0xFD8
+
+
+Microchip Technology PIC18 Macro Assembler V2.30 build 20200825195618 
+Symbol Table                                                                                               Thu Nov 26 15:31:16 2020
+
+                             rst 0000                             INDF0 000FEF                             PRODH 000FF4  
+                           PRODL 000FF3                             setup 000C                             start 0024  
+                          STKPTR 000FFC                      LCD_Write_HR FEDA               Int_Start_interrupt FC24  
+                          int_hi 0004                           hresult 001C                           lresult 001D  
+                  LCD_ErrMessage FF1C               Analysis_and_output 0044                          ADC_Read FD3C  
+                        HR_Setup FC8A                      HR_Calculate FD08                          Int_Main FC32  
+                    HR_Next_Beat FCF4                    HR_Count_beats FCCC                      HR_reset_var 0014  
+                     count_beats 002C                         ADC_Setup FD1E                  HR_Look_for_beat FCAE  
+                       LCD_Setup FE34                       HR_Add_Beat FCEE                         Int_Setup FC1A  
+                    ADC_hextodec FDD0  

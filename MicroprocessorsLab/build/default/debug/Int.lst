@@ -1,0 +1,158 @@
+
+
+Microchip MPLAB XC8 Assembler V2.30 build 20200825195618 
+                                                                                                           Thu Nov 26 15:54:25 2020
+
+
+     1                           	processor	18F87K22
+     2                           	pagewidth 132
+     3                           	psect	udata_acs,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     4                           	psect	udata_bank0,global,class=BANK0,space=1,delta=1,lowdata,noexec
+     5                           	psect	udata_bank1,global,class=BANK1,space=1,delta=1,lowdata,noexec
+     6                           	psect	udata_bank2,global,class=BANK2,space=1,delta=1,lowdata,noexec
+     7                           	psect	udata_bank3,global,class=BANK3,space=1,delta=1,lowdata,noexec
+     8                           	psect	udata_bank4,global,class=BANK4,space=1,delta=1,lowdata,noexec
+     9                           	psect	udata_bank5,global,class=BANK5,space=1,delta=1,lowdata,noexec
+    10                           	psect	udata_bank6,global,class=BANK6,space=1,delta=1,lowdata,noexec
+    11                           	psect	udata_bank7,global,class=BANK7,space=1,delta=1,lowdata,noexec
+    12                           	psect	udata_bank8,global,class=BANK8,space=1,delta=1,lowdata,noexec
+    13                           	psect	udata_bank9,global,class=BANK9,space=1,delta=1,lowdata,noexec
+    14                           	psect	udata_bank10,global,class=BANK10,space=1,delta=1,lowdata,noexec
+    15                           	psect	udata_bank11,global,class=BANK11,space=1,delta=1,lowdata,noexec
+    16                           	psect	udata_bank12,global,class=BANK12,space=1,delta=1,lowdata,noexec
+    17                           	psect	udata_bank13,global,class=BANK13,space=1,delta=1,lowdata,noexec
+    18                           	psect	udata_bank14,global,class=BANK14,space=1,delta=1,lowdata,noexec
+    19                           	psect	udata_bank15,global,class=BANK15,space=1,delta=1,lowdata,noexec
+    20                           	psect	udata,global,class=RAM,space=1,delta=1,noexec
+    21                           	psect	code,global,reloc=2,class=CODE,delta=1
+    22                           	psect	data,global,reloc=2,class=CONST,delta=1,noexec
+    23                           	psect	edata,global,class=EEDATA,space=3,delta=2,noexec
+    24                           	psect	dac_code,global,class=CODE,delta=1
+    25  0000                     
+    26                           	psect	udata_acs
+    27  00001A                     int_count:
+    28  00001A                     	ds	1
+    29  00001B                     init:
+    30  00001B                     	ds	1	; reserve one byte for the initialisation variable
+    31                           
+    32                           	psect	edata
+    33  0000                     stk_offset	set	0
+    34  0000                     auto_size	set	0
+    35                           
+    36                           ; stack_auto defines a symbol /name/_offset which equates to the
+    37                           ; stack offset of the auto object in question
+    38  000000                     
+    39                           ; stack_param defines a symbol /name/_offset which equates to the
+    40                           ; stack offset of the parameter object in question
+    41  000000                     
+    42                           ; alloc_stack adjusts the SP to allocate space for auto objects
+    43                           ; it also links in to the btemp symbol so that can be used
+    44  000000                     
+    45                           ; restore_stack adjusts the SP to remove all auto and parameter
+    46                           ; objects from the stack prior to returning from a function
+    47  000000                     
+    48                           	psect	dac_code
+    49  01FC1A                     Int_Setup:
+    50                           	callstack 0
+    51  01FC1A  6A9A               	clrf	3994,c	; Set PORTD as all outputs
+    52  01FC1C  6A91               	clrf	3985,c	; Clear PORTD outputs
+    53  01FC1E  0E00               	movlw	0	; Clear initialisation variable
+    54  01FC20  6E1B               	movwf	init,c
+    55  01FC22  0012               	return		; return to main code
+    56  01FC24                     Int_Start_interrupt:
+    57                           	callstack 0
+    58  01FC24  0E87               	movlw	135	; Set timer0 to 16-bit, Fosc/4/256
+    59  01FC26  6ED5               	movwf	4053,c	; = 62.5KHz clock rate, approx 1sec rollover
+    60  01FC28  8AF2               	bsf	242,5,c	; Enable timer0 interrupt
+    61  01FC2A  8EF2               	bsf	242,7,c	; Enable all interrupts
+    62  01FC2C  0E00               	movlw	0
+    63  01FC2E  6E1A               	movwf	int_count,c	; clear interrupt count
+    64  01FC30  0012               	return	
+    65  01FC32                     Int_Main:
+    66                           	callstack 0
+    67  01FC32  A4F2               	btfss	242,2,c	; check that this is timer0 interrupt
+    68  01FC34  0011               	retfie		f	; if not then return
+    69  01FC36  94F2               	bcf	242,2,c	; clear interrupt flag
+    70  01FC38  2A1A               	incf	int_count,f,c	; increment interrupt count by 1
+    71  01FC3A  0E01               	movlw	1	; check if init has been initalised
+    72  01FC3C  621B               	cpfseq	init,c
+    73  01FC3E  EF34  F0FE         	goto	Int_Check	; if it hasnt goto Int_Check
+    74  01FC42  0E0F               	movlw	15
+    75  01FC44  621A               	cpfseq	int_count,c	; check if interrupt counter is 10
+    76  01FC46  EF2E  F0FE         	goto	Int_Main_lt10	; if it is less than 10 goto main lt10 routine
+    77  01FC4A  EE00 F080          	lfsr	0,128	; else reset fsr0 to start of seconds registers
+    78  01FC4E  0E00               	movlw	0	; clear interrupt counter
+    79  01FC50  6E1A               	movwf	int_count,c
+    80  01FC52  8EF2               	bsf	242,7,c	; re-enable all interrupts
+    81  01FC54  0006               	pop		; clear unnecessary elements in stack
+    82  01FC56  0006               	pop	
+    83  01FC58  EF22  F000         	goto	Analysis_and_output	; go back to main code
+    84  01FC5C                     Int_Main_lt10:
+    85  01FC5C  50EE               	movf	postinc0,w,c	; increment fsr0
+    86  01FC5E  8EF2               	bsf	242,7,c	; re-enable all interrupts
+    87  01FC60  0006               	pop		; clear unnecessary elements in stack
+    88  01FC62  0006               	pop	
+    89  01FC64  EF22  F000         	goto	Analysis_and_output	; go back to main code
+    90  01FC68                     Int_Check:
+    91  01FC68  0E0F               	movlw	15
+    92  01FC6A  621A               	cpfseq	int_count,c	; check if interrupt counter is 10
+    93  01FC6C  EF43  F0FE         	goto	Int_return	; if not go to return routine
+    94  01FC70  0E01               	movlw	1	; else set initialisation variable to 1
+    95  01FC72  6E1B               	movwf	init,c
+    96  01FC74  EE00 F080          	lfsr	0,128	; reset fsr0 to start of seconds registers
+    97  01FC78  0E00               	movlw	0	; clear interrupt counter
+    98  01FC7A  6E1A               	movwf	int_count,c
+    99  01FC7C  8EF2               	bsf	242,7,c	; re-enable all interrupts
+   100  01FC7E  0006               	pop		; clear unnecessary elements in stack
+   101  01FC80  0006               	pop	
+   102  01FC82  EF22  F000         	goto	Analysis_and_output	; go back to main code
+   103  01FC86                     Int_return:
+   104  01FC86  50EE               	movf	postinc0,w,c	; increment fsr0
+   105  01FC88  0011               	retfie		f
+   106                           tosu	equ	0xFFF
+   107                           tosh	equ	0xFFE
+   108                           tosl	equ	0xFFD
+   109                           stkptr	equ	0xFFC
+   110                           pclatu	equ	0xFFB
+   111                           pclath	equ	0xFFA
+   112                           pcl	equ	0xFF9
+   113                           tblptru	equ	0xFF8
+   114                           tblptrh	equ	0xFF7
+   115                           tblptrl	equ	0xFF6
+   116                           tablat	equ	0xFF5
+   117                           prodh	equ	0xFF4
+   118                           prodl	equ	0xFF3
+   119                           indf0	equ	0xFEF
+   120                           postinc0	equ	0xFEE
+   121                           postdec0	equ	0xFED
+   122                           preinc0	equ	0xFEC
+   123                           plusw0	equ	0xFEB
+   124                           fsr0h	equ	0xFEA
+   125                           fsr0l	equ	0xFE9
+   126                           wreg	equ	0xFE8
+   127                           indf1	equ	0xFE7
+   128                           postinc1	equ	0xFE6
+   129                           postdec1	equ	0xFE5
+   130                           preinc1	equ	0xFE4
+   131                           plusw1	equ	0xFE3
+   132                           fsr1h	equ	0xFE2
+   133                           fsr1l	equ	0xFE1
+   134                           bsr	equ	0xFE0
+   135                           indf2	equ	0xFDF
+   136                           postinc2	equ	0xFDE
+   137                           postdec2	equ	0xFDD
+   138                           preinc2	equ	0xFDC
+   139                           plusw2	equ	0xFDB
+   140                           fsr2h	equ	0xFDA
+   141                           fsr2l	equ	0xFD9
+   142                           status	equ	0xFD8
+
+
+Microchip Technology PIC18 Macro Assembler V2.30 build 20200825195618 
+Symbol Table                                                                                               Thu Nov 26 15:54:25 2020
+
+                            LATJ 000F91                              init 001B                             T0CON 000FD5  
+                           TRISJ 000F9A                            INTCON 000FF2               Int_Start_interrupt FC24  
+                   Int_Main_lt10 FC5C               Analysis_and_output 0044                          POSTINC0 000FEE  
+                        Int_Main FC32                        Int_return FC86                         Int_Check FC68  
+                       Int_Setup FC1A                         int_count 001A  

@@ -1,0 +1,189 @@
+
+
+Microchip MPLAB XC8 Assembler V2.30 build 20200825195618 
+                                                                                                           Thu Nov 26 15:31:16 2020
+
+
+     1                           	processor	18F87K22
+     2                           	pagewidth 132
+     3                           	psect	udata_acs,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     4                           	psect	udata_bank0,global,class=BANK0,space=1,delta=1,lowdata,noexec
+     5                           	psect	udata_bank1,global,class=BANK1,space=1,delta=1,lowdata,noexec
+     6                           	psect	udata_bank2,global,class=BANK2,space=1,delta=1,lowdata,noexec
+     7                           	psect	udata_bank3,global,class=BANK3,space=1,delta=1,lowdata,noexec
+     8                           	psect	udata_bank4,global,class=BANK4,space=1,delta=1,lowdata,noexec
+     9                           	psect	udata_bank5,global,class=BANK5,space=1,delta=1,lowdata,noexec
+    10                           	psect	udata_bank6,global,class=BANK6,space=1,delta=1,lowdata,noexec
+    11                           	psect	udata_bank7,global,class=BANK7,space=1,delta=1,lowdata,noexec
+    12                           	psect	udata_bank8,global,class=BANK8,space=1,delta=1,lowdata,noexec
+    13                           	psect	udata_bank9,global,class=BANK9,space=1,delta=1,lowdata,noexec
+    14                           	psect	udata_bank10,global,class=BANK10,space=1,delta=1,lowdata,noexec
+    15                           	psect	udata_bank11,global,class=BANK11,space=1,delta=1,lowdata,noexec
+    16                           	psect	udata_bank12,global,class=BANK12,space=1,delta=1,lowdata,noexec
+    17                           	psect	udata_bank13,global,class=BANK13,space=1,delta=1,lowdata,noexec
+    18                           	psect	udata_bank14,global,class=BANK14,space=1,delta=1,lowdata,noexec
+    19                           	psect	udata_bank15,global,class=BANK15,space=1,delta=1,lowdata,noexec
+    20                           	psect	udata,global,class=RAM,space=1,delta=1,noexec
+    21                           	psect	code,global,reloc=2,class=CODE,delta=1
+    22                           	psect	data,global,reloc=2,class=CONST,delta=1,noexec
+    23                           	psect	edata,global,class=EEDATA,space=3,delta=2,noexec
+    24                           	psect	heartrate_code,global,class=CODE,delta=1
+    25  0000                     
+    26                           	psect	udata_acs
+    27  00000F                     thresholdh:
+    28  00000F                     	ds	1	;reserve 1 byte for threshold high byte
+    29  000010                     thresholdl:
+    30  000010                     	ds	1	;reserve 1 byte for threshold low byte
+    31  000011                     addition_count:
+    32  000011                     	ds	1
+    33  000012                     multiply:
+    34  000012                     	ds	1
+    35  000013                     Clear_Reg_count:
+    36  000013                     	ds	1
+    37  000014                     HR_reset_var:
+    38                           	callstack 0
+    39  000014                     	ds	1
+    40                           
+    41                           	psect	edata
+    42  0000                     stk_offset	set	0
+    43  0000                     auto_size	set	0
+    44                           
+    45                           ; stack_auto defines a symbol /name/_offset which equates to the
+    46                           ; stack offset of the auto object in question
+    47  000000                     
+    48                           ; stack_param defines a symbol /name/_offset which equates to the
+    49                           ; stack offset of the parameter object in question
+    50  000000                     
+    51                           ; alloc_stack adjusts the SP to allocate space for auto objects
+    52                           ; it also links in to the btemp symbol so that can be used
+    53  000000                     
+    54                           ; restore_stack adjusts the SP to remove all auto and parameter
+    55                           ; objects from the stack prior to returning from a function
+    56  000000                     
+    57                           	psect	heartrate_code
+    58  01FC8A                     HR_Setup:
+    59                           	callstack 0
+    60  01FC8A  0E01               	movlw	1	; reset HR Reset variable
+    61  01FC8C  6E14               	movwf	HR_reset_var,c
+    62  01FC8E  0E0D               	movlw	13	; set threshold values
+    63  01FC90  6E0F               	movwf	thresholdh,c
+    64  01FC92  0E98               	movlw	152	; set threshold values
+    65  01FC94  6E10               	movwf	thresholdl,c
+    66  01FC96  0E04               	movlw	4	; set multiplication value to 4
+    67  01FC98  6E12               	movwf	multiply,c
+    68  01FC9A  0E0F               	movlw	15	; set clear reg counter to 15
+    69  01FC9C  6E13               	movwf	Clear_Reg_count,c
+    70  01FC9E  0E00               	movlw	0
+    71  01FCA0  EE20 F080          	lfsr	2,128	; set fsr2 to the beginning of the seconds registers
+    72  01FCA4                     Clear_Registers:
+    73  01FCA4  6EDE               	movwf	postinc2,c	; clear all registers
+    74  01FCA6  2E13               	decfsz	Clear_Reg_count,f,c
+    75  01FCA8  EF52  F0FE         	goto	Clear_Registers
+    76  01FCAC  0012               	return		; return to main code
+    77  01FCAE                     HR_Look_for_beat:
+    78                           	callstack 0
+    79  01FCAE  EC9E  F0FE         	call	ADC_Read	; call the ADC read function
+    80  01FCB2  500F               	movf	thresholdh,w,c	; move the high byte of the threshold to W
+    81  01FCB4  64C4               	cpfsgt	4036,c	; check if the high byte from the ADC is more than threshold
+    82  01FCB6  EF5E  F0FE         	goto	lfb_lt_or_eq	; if it isnt skip to checking if it is equal or less than
+    83  01FCBA  0012               	return		; if it is return to main code
+    84  01FCBC                     lfb_lt_or_eq:
+    85  01FCBC  62C4               	cpfseq	4036,c	; check if the high byte from ADC is equal to threshold
+    86  01FCBE  EF57  F0FE         	goto	HR_Look_for_beat	; if it isnt continue waiting for beat
+    87  01FCC2  5010               	movf	thresholdl,w,c	; if it is move the low byte of the threshold to W
+    88  01FCC4  64C3               	cpfsgt	4035,c	; check if the low byte is bigger than the threshold
+    89  01FCC6  EF57  F0FE         	goto	HR_Look_for_beat	; if it isnt continue waiting for beat
+    90  01FCCA  0012               	return		; if it is return to main code
+    91  01FCCC                     HR_Count_beats:
+    92                           	callstack 0
+    93  01FCCC  0E01               	movlw	1	; set reset variable to 1
+    94  01FCCE  6E14               	movwf	HR_reset_var,c
+    95  01FCD0                     Count_Beats:
+    96  01FCD0  500F               	movf	thresholdh,w,c	; move the high byte of the threshold to W
+    97  01FCD2  EC9E  F0FE         	call	ADC_Read	; call the ADC read function
+    98  01FCD6  64C4               	cpfsgt	4036,c	; check if the high byte from the ADC is more than threshold
+    99  01FCD8  EF70  F0FE         	goto	cb_lt_or_eq	; if it isnt skip to checking if it is equal or less than
+   100  01FCDC  EF77  F0FE         	goto	HR_Add_Beat	; if it is go to Add Beat Routine
+   101  01FCE0                     cb_lt_or_eq:
+   102  01FCE0  62C4               	cpfseq	4036,c	; check if the high byte from ADC is equal to threshold
+   103  01FCE2  EF68  F0FE         	goto	Count_Beats	; if it isnt continue waiting for beat
+   104  01FCE6  5010               	movf	thresholdl,w,c	; if it is move the low byte of the threshold to W
+   105  01FCE8  64C3               	cpfsgt	4035,c	; check if the low byte is bigger than the threshold
+   106  01FCEA  EF68  F0FE         	goto	Count_Beats	; if it isnt continue waiting for beat
+   107  01FCEE                     HR_Add_Beat:
+   108                           	callstack 0
+   109  01FCEE  0E02               	movlw	2	; set reset variable to 2
+   110  01FCF0  6E14               	movwf	HR_reset_var,c
+   111  01FCF2  2AEF               	incf	indf0,f,c	; increase beat counter by 1
+   112  01FCF4                     HR_Next_Beat:
+   113                           	callstack 0
+   114  01FCF4  0E03               	movlw	3	; set reset variable to 3
+   115  01FCF6  6E14               	movwf	HR_reset_var,c
+   116  01FCF8  500F               	movf	thresholdh,w,c	; move high byte of threshold to W
+   117  01FCFA                     Next_Beat:
+   118  01FCFA  EC9E  F0FE         	call	ADC_Read	; read the value from the ACD
+   119  01FCFE  60C4               	cpfslt	4036,c	; check to see if ACD value is lower than threshold
+   120  01FD00  EF7D  F0FE         	goto	Next_Beat	; if not loop to check again
+   121  01FD04  EF66  F0FE         	goto	HR_Count_beats	; if it is go back to counting beats
+   122  01FD08                     HR_Calculate:
+   123                           	callstack 0
+   124  01FD08  0E0F               	movlw	15	; set counter to 15
+   125  01FD0A  6E11               	movwf	addition_count,c
+   126  01FD0C  EE10 F080          	lfsr	1,128	; set fsr1 to the start of the seconds registers
+   127  01FD10  0E00               	movlw	0	; clear W register
+   128  01FD12                     Total:
+   129  01FD12  24E6               	addwf	postinc1,w,c	; total all seconds registers
+   130  01FD14  2E11               	decfsz	addition_count,f,c
+   131  01FD16  EF89  F0FE         	goto	Total
+   132  01FD1A  0212               	mulwf	multiply,c	; multiply by multiplication variable
+   133  01FD1C  0012               	return	
+   134                           tosu	equ	0xFFF
+   135                           tosh	equ	0xFFE
+   136                           tosl	equ	0xFFD
+   137                           stkptr	equ	0xFFC
+   138                           pclatu	equ	0xFFB
+   139                           pclath	equ	0xFFA
+   140                           pcl	equ	0xFF9
+   141                           tblptru	equ	0xFF8
+   142                           tblptrh	equ	0xFF7
+   143                           tblptrl	equ	0xFF6
+   144                           tablat	equ	0xFF5
+   145                           prodh	equ	0xFF4
+   146                           prodl	equ	0xFF3
+   147                           indf0	equ	0xFEF
+   148                           postinc0	equ	0xFEE
+   149                           postdec0	equ	0xFED
+   150                           preinc0	equ	0xFEC
+   151                           plusw0	equ	0xFEB
+   152                           fsr0h	equ	0xFEA
+   153                           fsr0l	equ	0xFE9
+   154                           wreg	equ	0xFE8
+   155                           indf1	equ	0xFE7
+   156                           postinc1	equ	0xFE6
+   157                           postdec1	equ	0xFE5
+   158                           preinc1	equ	0xFE4
+   159                           plusw1	equ	0xFE3
+   160                           fsr1h	equ	0xFE2
+   161                           fsr1l	equ	0xFE1
+   162                           bsr	equ	0xFE0
+   163                           indf2	equ	0xFDF
+   164                           postinc2	equ	0xFDE
+   165                           postdec2	equ	0xFDD
+   166                           preinc2	equ	0xFDC
+   167                           plusw2	equ	0xFDB
+   168                           fsr2h	equ	0xFDA
+   169                           fsr2l	equ	0xFD9
+   170                           status	equ	0xFD8
+
+
+Microchip Technology PIC18 Macro Assembler V2.30 build 20200825195618 
+Symbol Table                                                                                               Thu Nov 26 15:31:16 2020
+
+                     Count_Beats FCD0                             INDF0 000FEF                             Total FD12  
+                          ADRESH 000FC4                            ADRESL 000FC3                      lfb_lt_or_eq FCBC  
+                        ADC_Read FD3C                          POSTINC1 000FE6                          POSTINC2 000FDE  
+                        HR_Setup FC8A                      HR_Calculate FD08                       cb_lt_or_eq FCE0  
+                 Clear_Reg_count 0013                      HR_Next_Beat FCF4                   Clear_Registers FCA4  
+                        multiply 0012                    HR_Count_beats FCCC                      HR_reset_var 0014  
+                HR_Look_for_beat FCAE                       HR_Add_Beat FCEE                         Next_Beat FCFA  
+                      thresholdh 000F                        thresholdl 0010                    addition_count 0011  

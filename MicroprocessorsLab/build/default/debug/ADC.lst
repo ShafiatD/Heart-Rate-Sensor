@@ -1,0 +1,252 @@
+
+
+Microchip MPLAB XC8 Assembler V2.30 build 20200825195618 
+                                                                                                           Thu Nov 26 15:54:25 2020
+
+
+     1                           	processor	18F87K22
+     2                           	pagewidth 132
+     3                           	psect	udata_acs,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     4                           	psect	udata_bank0,global,class=BANK0,space=1,delta=1,lowdata,noexec
+     5                           	psect	udata_bank1,global,class=BANK1,space=1,delta=1,lowdata,noexec
+     6                           	psect	udata_bank2,global,class=BANK2,space=1,delta=1,lowdata,noexec
+     7                           	psect	udata_bank3,global,class=BANK3,space=1,delta=1,lowdata,noexec
+     8                           	psect	udata_bank4,global,class=BANK4,space=1,delta=1,lowdata,noexec
+     9                           	psect	udata_bank5,global,class=BANK5,space=1,delta=1,lowdata,noexec
+    10                           	psect	udata_bank6,global,class=BANK6,space=1,delta=1,lowdata,noexec
+    11                           	psect	udata_bank7,global,class=BANK7,space=1,delta=1,lowdata,noexec
+    12                           	psect	udata_bank8,global,class=BANK8,space=1,delta=1,lowdata,noexec
+    13                           	psect	udata_bank9,global,class=BANK9,space=1,delta=1,lowdata,noexec
+    14                           	psect	udata_bank10,global,class=BANK10,space=1,delta=1,lowdata,noexec
+    15                           	psect	udata_bank11,global,class=BANK11,space=1,delta=1,lowdata,noexec
+    16                           	psect	udata_bank12,global,class=BANK12,space=1,delta=1,lowdata,noexec
+    17                           	psect	udata_bank13,global,class=BANK13,space=1,delta=1,lowdata,noexec
+    18                           	psect	udata_bank14,global,class=BANK14,space=1,delta=1,lowdata,noexec
+    19                           	psect	udata_bank15,global,class=BANK15,space=1,delta=1,lowdata,noexec
+    20                           	psect	udata,global,class=RAM,space=1,delta=1,noexec
+    21                           	psect	code,global,reloc=2,class=CODE,delta=1
+    22                           	psect	data,global,reloc=2,class=CONST,delta=1,noexec
+    23                           	psect	edata,global,class=EEDATA,space=3,delta=2,noexec
+    24                           	psect	adc_code,global,class=CODE,delta=1
+    25  0000                     
+    26                           	psect	udata_acs
+    27  000000                     byte8:
+    28  000000                     	ds	1
+    29  000001                     lbyte16:
+    30  000001                     	ds	1
+    31  000002                     hbyte16:
+    32  000002                     	ds	1
+    33  000003                     lbyte16_2:
+    34  000003                     	ds	1
+    35  000004                     hbyte16_2:
+    36  000004                     	ds	1
+    37  000005                     lbyte24:
+    38  000005                     	ds	1
+    39  000006                     mbyte24:
+    40  000006                     	ds	1
+    41  000007                     hbyte24:
+    42  000007                     	ds	1
+    43  000008                     lbyte32:
+    44  000008                     	ds	1
+    45  000009                     m1byte32:
+    46  000009                     	ds	1
+    47  00000A                     m2byte32:
+    48  00000A                     	ds	1
+    49  00000B                     hbyte32:
+    50  00000B                     	ds	1
+    51  00000C                     numresulth:
+    52                           	callstack 0
+    53  00000C                     	ds	1
+    54  00000D                     numresultl:
+    55                           	callstack 0
+    56  00000D                     	ds	1
+    57  00000E                     ten:
+    58  00000E                     	ds	1
+    59                           
+    60                           	psect	edata
+    61  0000                     stk_offset	set	0
+    62  0000                     auto_size	set	0
+    63                           
+    64                           ; stack_auto defines a symbol /name/_offset which equates to the
+    65                           ; stack offset of the auto object in question
+    66  000000                     
+    67                           ; stack_param defines a symbol /name/_offset which equates to the
+    68                           ; stack offset of the parameter object in question
+    69  000000                     
+    70                           ; alloc_stack adjusts the SP to allocate space for auto objects
+    71                           ; it also links in to the btemp symbol so that can be used
+    72  000000                     
+    73                           ; restore_stack adjusts the SP to remove all auto and parameter
+    74                           ; objects from the stack prior to returning from a function
+    75  000000                     
+    76                           	psect	adc_code
+    77  01FD1E                     ADC_Setup:
+    78                           	callstack 0
+    79  01FD1E  6E0C               	movwf	numresulth,c
+    80  01FD20  6E0D               	movwf	numresultl,c
+    81  01FD22  8092               	bsf	3986,0,c	; pin ((PORTA) and 0FFh), 0, a==((PORTA) and 0FFh), 0, a input
+    82  01FD24  8125               	bsf	37,0,b	; set ((PORTA) and 0FFh), 0, a to analog
+    83  01FD26  0E01               	movlw	1	; select ((PORTA) and 0FFh), 0, a for measurement
+    84  01FD28  6EC2               	movwf	4034,c	; and turn ADC on
+    85  01FD2A  0E30               	movlw	48	; Select 4.096V positive reference
+    86  01FD2C  6EC1               	movwf	4033,c	; 0V for -ve reference and -ve input
+    87  01FD2E  0EF6               	movlw	246	; Right justified output
+    88  01FD30  6EC0               	movwf	4032,c	; Fosc/64 clock and acquisition times
+    89  01FD32  9AC1               	bcf	193,5,c	; enable ADC to accept external +voltage reference
+    90  01FD34  88C1               	bsf	193,4,c
+    91  01FD36  0E0A               	movlw	10	; set 'ten' variable to 10
+    92  01FD38  6E0E               	movwf	ten,c
+    93  01FD3A  0012               	return	
+    94  01FD3C                     ADC_Read:
+    95                           	callstack 0
+    96  01FD3C  82C2               	bsf	194,1,c	; Start conversion by setting ((ADCON0) and 0FFh), 1, a bit in ADCON0
+    97  01FD3E                     adc_loop:
+    98  01FD3E  B2C2               	btfsc	194,1,c	; check to see if finished
+    99  01FD40  D7FE               	bra	adc_loop
+   100  01FD42  0012               	return	
+   101  01FD44                     adc8x16:
+   102  01FD44  0E00               	movlw	0
+   103  01FD46  6E05               	movwf	lbyte24,c
+   104  01FD48  6E06               	movwf	mbyte24,c
+   105  01FD4A  6E07               	movwf	hbyte24,c
+   106  01FD4C  5000               	movf	byte8,w,c
+   107  01FD4E  0201               	mulwf	lbyte16,c
+   108  01FD50  CFF3 F005          	movff	prodl,lbyte24
+   109  01FD54  CFF4 F006          	movff	prodh,mbyte24
+   110  01FD58  0202               	mulwf	hbyte16,c
+   111  01FD5A  50F3               	movf	prodl,w,c
+   112  01FD5C  2606               	addwf	mbyte24,f,c	; add back into mbyte24
+   113  01FD5E  50F4               	movf	prodh,w,c
+   114  01FD60  2207               	addwfc	hbyte24,f,c
+   115  01FD62  0012               	return	
+   116  01FD64                     adc16x16:
+   117  01FD64  0E00               	movlw	0
+   118  01FD66  6E08               	movwf	lbyte32,c
+   119  01FD68  6E09               	movwf	m1byte32,c
+   120  01FD6A  6E0A               	movwf	m2byte32,c
+   121  01FD6C  6E0B               	movwf	hbyte32,c
+   122  01FD6E  C003  F000         	movff	lbyte16_2,byte8
+   123  01FD72  ECA2  F0FE         	call	adc8x16
+   124  01FD76  C005  F008         	movff	lbyte24,lbyte32
+   125  01FD7A  C006  F009         	movff	mbyte24,m1byte32
+   126  01FD7E  C007  F00A         	movff	hbyte24,m2byte32
+   127  01FD82  C004  F000         	movff	hbyte16_2,byte8
+   128  01FD86  ECA2  F0FE         	call	adc8x16
+   129  01FD8A  5005               	movf	lbyte24,w,c
+   130  01FD8C  2609               	addwf	m1byte32,f,c
+   131  01FD8E  5006               	movf	mbyte24,w,c
+   132  01FD90  220A               	addwfc	m2byte32,f,c
+   133  01FD92  5007               	movf	hbyte24,w,c
+   134  01FD94  220B               	addwfc	hbyte32,f,c
+   135  01FD96  0012               	return	
+   136  01FD98                     adc8x24:
+   137  01FD98  0E00               	movlw	0
+   138  01FD9A  6E08               	movwf	lbyte32,c
+   139  01FD9C  6E09               	movwf	m1byte32,c
+   140  01FD9E  6E0A               	movwf	m2byte32,c
+   141  01FDA0  6E0B               	movwf	hbyte32,c
+   142  01FDA2  C007  F00B         	movff	hbyte24,hbyte32
+   143  01FDA6  C006  F002         	movff	mbyte24,hbyte16
+   144  01FDAA  C005  F001         	movff	lbyte24,lbyte16
+   145  01FDAE  ECA2  F0FE         	call	adc8x16
+   146  01FDB2  C005  F008         	movff	lbyte24,lbyte32
+   147  01FDB6  C006  F009         	movff	mbyte24,m1byte32
+   148  01FDBA  C007  F00A         	movff	hbyte24,m2byte32
+   149  01FDBE  500B               	movf	hbyte32,w,c
+   150  01FDC0  0200               	mulwf	byte8,c
+   151  01FDC2  50F3               	movf	prodl,w,c
+   152  01FDC4  260A               	addwf	m2byte32,f,c
+   153  01FDC6  0E00               	movlw	0
+   154  01FDC8  6E0B               	movwf	hbyte32,c
+   155  01FDCA  50F4               	movf	prodh,w,c
+   156  01FDCC  220B               	addwfc	hbyte32,f,c
+   157  01FDCE  0012               	return	
+   158  01FDD0                     ADC_hextodec:
+   159                           	callstack 0
+   160  01FDD0  0E00               	movlw	0	;clear result registers
+   161  01FDD2  6E0C               	movwf	numresulth,c
+   162  01FDD4  6E0D               	movwf	numresultl,c
+   163  01FDD6  C01C  F002         	movff	hresult,hbyte16	;move acd outputs to 16bit registers
+   164  01FDDA  C01D  F001         	movff	lresult,lbyte16
+   165  01FDDE  0E41               	movlw	65	;move 0x418A to 2nd 16bit registers
+   166  01FDE0  6E04               	movwf	hbyte16_2,c
+   167  01FDE2  0E8A               	movlw	138
+   168  01FDE4  6E03               	movwf	lbyte16_2,c
+   169  01FDE6  ECB2  F0FE         	call	adc16x16	;perform 16bitx16bit multiplication
+   170  01FDEA  500B               	movf	hbyte32,w,c	;move the highest byte to the working register
+   171  01FDEC  120C               	iorwf	numresulth,f,c	;add highest byte to final result register
+   172  01FDEE  3A0C               	swapf	numresulth,f,c	;move it to high nibble
+   173  01FDF0  C00E  F000         	movff	ten,byte8	;move 0x0A to 8bit register
+   174  01FDF4  C00A  F007         	movff	m2byte32,hbyte24	;move lowest 3 bytes from 16x16 result to 24 bit registers
+   175  01FDF8  C009  F006         	movff	m1byte32,mbyte24
+   176  01FDFC  C008  F005         	movff	lbyte32,lbyte24
+   177  01FE00  ECCC  F0FE         	call	adc8x24	;perform 8x24 bit multiplication
+   178  01FE04  500B               	movf	hbyte32,w,c	;move highest byte to the woring register
+   179  01FE06  120C               	iorwf	numresulth,f,c	;add highest byte to low nibble of the final result register
+   180  01FE08  C00A  F007         	movff	m2byte32,hbyte24	;move lowest 3 bytes from 16x16 result to 24 bit registers
+   181  01FE0C  C009  F006         	movff	m1byte32,mbyte24
+   182  01FE10  C008  F005         	movff	lbyte32,lbyte24
+   183  01FE14  ECCC  F0FE         	call	adc8x24	;perform 8x24 bit multiplication
+   184  01FE18  500B               	movf	hbyte32,w,c	;move highest byte to the woring register
+   185  01FE1A  120D               	iorwf	numresultl,f,c	;add highest byte to low nibble of the final result register
+   186  01FE1C  3A0D               	swapf	numresultl,f,c	;move it to high nibble
+   187  01FE1E  C00A  F007         	movff	m2byte32,hbyte24	;move lowest 3 bytes from 16x16 result to 24 bit registers
+   188  01FE22  C009  F006         	movff	m1byte32,mbyte24
+   189  01FE26  C008  F005         	movff	lbyte32,lbyte24
+   190  01FE2A  ECCC  F0FE         	call	adc8x24	;perform 8x24 bit multiplication
+   191  01FE2E  500B               	movf	hbyte32,w,c	;move highest byte to the woring register
+   192  01FE30  120D               	iorwf	numresultl,f,c	;add highest byte to low nibble of the final result register
+   193  01FE32  0012               	return	
+   194                           tosu	equ	0xFFF
+   195                           tosh	equ	0xFFE
+   196                           tosl	equ	0xFFD
+   197                           stkptr	equ	0xFFC
+   198                           pclatu	equ	0xFFB
+   199                           pclath	equ	0xFFA
+   200                           pcl	equ	0xFF9
+   201                           tblptru	equ	0xFF8
+   202                           tblptrh	equ	0xFF7
+   203                           tblptrl	equ	0xFF6
+   204                           tablat	equ	0xFF5
+   205                           prodh	equ	0xFF4
+   206                           prodl	equ	0xFF3
+   207                           indf0	equ	0xFEF
+   208                           postinc0	equ	0xFEE
+   209                           postdec0	equ	0xFED
+   210                           preinc0	equ	0xFEC
+   211                           plusw0	equ	0xFEB
+   212                           fsr0h	equ	0xFEA
+   213                           fsr0l	equ	0xFE9
+   214                           wreg	equ	0xFE8
+   215                           indf1	equ	0xFE7
+   216                           postinc1	equ	0xFE6
+   217                           postdec1	equ	0xFE5
+   218                           preinc1	equ	0xFE4
+   219                           plusw1	equ	0xFE3
+   220                           fsr1h	equ	0xFE2
+   221                           fsr1l	equ	0xFE1
+   222                           bsr	equ	0xFE0
+   223                           indf2	equ	0xFDF
+   224                           postinc2	equ	0xFDE
+   225                           postdec2	equ	0xFDD
+   226                           preinc2	equ	0xFDC
+   227                           plusw2	equ	0xFDB
+   228                           fsr2h	equ	0xFDA
+   229                           fsr2l	equ	0xFD9
+   230                           status	equ	0xFD8
+
+
+Microchip Technology PIC18 Macro Assembler V2.30 build 20200825195618 
+Symbol Table                                                                                               Thu Nov 26 15:54:25 2020
+
+                             ten 000E                             PRODH 000FF4                             PRODL 000FF3  
+                           TRISA 000F92                             byte8 0000                            ADCON0 000FC2  
+                          ADCON1 000FC1                            ADCON2 000FC0                            ANCON0 000F25  
+                         adc8x24 FD98                           adc8x16 FD44                           hbyte32 000B  
+                         hbyte24 0007                           hbyte16 0002                           lbyte32 0008  
+                         lbyte24 0005                           lbyte16 0001                           mbyte24 0006  
+                         hresult 001C                           lresult 001D                          ADC_Read FD3C  
+                        m1byte32 0009                          m2byte32 000A                          adc16x16 FD64  
+                        adc_loop FD3E                         ADC_Setup FD1E                    PORTA_RA0_POSN 000000  
+                    ADC_hextodec FDD0                         hbyte16_2 0004                        numresulth 000C  
+                      numresultl 000D                         lbyte16_2 0003  
